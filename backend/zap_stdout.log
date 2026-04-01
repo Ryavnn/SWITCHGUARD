@@ -1,0 +1,4 @@
+
+C:\Users\Admin\Desktop\ian\switchguard\backend>if exist "C:\Users\Admin\ZAP\.ZAP_JVM.properties" (set /p jvmopts= 0<"C:\Users\Admin\ZAP\.ZAP_JVM.properties" )  else (set jvmopts=-Xmx512m ) 
+
+C:\Users\Admin\Desktop\ian\switchguard\backend>java -Xmx512m -jar zap-2.17.0.jar -daemon -port 8080 -config api.key=12345 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true 
