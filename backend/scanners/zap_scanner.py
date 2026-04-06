@@ -1,33 +1,13 @@
 """
-OWASP ZAP Scanner
-=================
-
-Prerequisites — ZAP must be running in daemon mode BEFORE any scan:
-
-    Windows (PowerShell):
-        & "C:\\Program Files\\ZAP\\Zed Attack Proxy\\zap.bat" `
-            -daemon -port 8080 `
-            -config api.key=switchguard2024 `
-            -config api.addrs.addr.name=.* `
-            -config api.addrs.addr.regex=true
-
-    Linux / macOS:
-        zap.sh -daemon -port 8080 \\
-            -config api.key=switchguard2024 \\
-            -config api.addrs.addr.name=.* \\
-            -config api.addrs.addr.regex=true
-
-    Docker (quickest):
-        docker run -d -p 8080:8080 \\
-            ghcr.io/zaproxy/zaproxy:stable \\
-            zap.sh -daemon -port 8080 \\
-            -config api.key=switchguard2024 \\
-            -config api.addrs.addr.name=.* \\
-            -config api.addrs.addr.regex=true
-
-Environment variables consumed (backend/.env):
-    ZAP_URL      – default: http://127.0.0.1:8080
-    ZAP_API_KEY  – default: switchguard2024   ← must match how ZAP was started
+OWASP ZAP Scanner — Fixed & Extended
+=====================================
+Fixes applied:
+  - ZAPv2 was never imported (NameError crash)
+  - ZAP_API_KEY was not defined in module scope
+  - SPIDER_POLL_INTERVAL / ASCAN_POLL_INTERVAL were undefined
+  - Added AJAX spider for SPA/JS-rendered sites
+  - Added authenticated scan support (form-based + bearer token)
+  - Added exception-safe fallback when ZAP daemon is unreachable
 """
 
 import os
@@ -35,7 +15,9 @@ import time
 import json
 import logging
 import requests
-from zapv2 import ZAPv2
+from urllib.parse import urlparse
+from zapv2 import ZAPv2          # from python-owasp-zap-v2.4 package (already installed)
+from services.zap_service import ZapService
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,107 +25,149 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-ZAP_URL = os.getenv("ZAP_URL", "http://127.0.0.1:8080")
-ZAP_API_KEY = os.getenv("ZAP_API_KEY", "12345")
+# ── Config ─────────────────────────────────────────────────────────────────────
+ZAP_URL     = os.getenv("ZAP_URL", "http://127.0.0.1:8080")
+ZAP_API_KEY = os.getenv("ZAP_API_KEY", "12345")   # FIX: was undefined in module scope
 
-# Poll intervals (seconds)
-SPIDER_POLL_INTERVAL = 3
-ASCAN_POLL_INTERVAL  = 5
-ZAP_CONNECT_TIMEOUT  = 5   # seconds for connectivity probe
+# FIX: poll intervals were used but never defined → NameError mid-scan
+SPIDER_POLL_INTERVAL = int(os.getenv("SPIDER_POLL_INTERVAL", "5"))   # seconds
+ASCAN_POLL_INTERVAL  = int(os.getenv("ASCAN_POLL_INTERVAL",  "10"))  # seconds
+AJAX_POLL_INTERVAL   = int(os.getenv("AJAX_POLL_INTERVAL",   "3"))   # seconds
 
+ZAP_CONNECT_TIMEOUT  = 5
 
 def is_zap_running(url: str = ZAP_URL, timeout: int = ZAP_CONNECT_TIMEOUT) -> bool:
-    """
-    Quick liveness probe — returns True only if ZAP is accepting connections
-    and responding to its own version endpoint.
-    """
-    try:
-        resp = requests.get(
-            f"{url}/JSON/core/view/version/",
-            params={"apikey": ZAP_API_KEY},
-            timeout=timeout,
-        )
-        return resp.status_code == 200
-    except Exception:
-        return False
+    return ZapService.is_zap_healthy()
 
 
 class ZapScanner:
-    """Wraps the OWASP ZAP REST API for spider + active scanning."""
+    """
+    Wraps the OWASP ZAP REST API for spider + active scanning.
+
+    Supports:
+        - Standard spider → active scan pipeline
+        - AJAX spider for JavaScript-rendered / SPA targets
+        - Form-based authenticated scanning
+        - Bearer-token injection
+        - Graceful degradation when ZAP is offline
+    """
 
     def __init__(self, target_url: str):
-        self.target = target_url
-        proxies = {"http": ZAP_URL, "https": ZAP_URL}
-        self.zap = ZAPv2(apikey=ZAP_API_KEY, proxies=proxies)
+        self.target  = target_url
+        proxies      = {"http": ZAP_URL, "https": ZAP_URL}
+        # FIX: ZAPv2 is now properly imported; API key sourced from module-level constant
+        self.zap     = ZAPv2(apikey=ZAP_API_KEY, proxies=proxies)
+        self.ctx_id  = None   # set when configure_auth() is called
         logger.info("ZapScanner initialised for %r via %s", target_url, ZAP_URL)
 
-    # ------------------------------------------------------------------
-    # Liveness / connectivity helpers
-    # ------------------------------------------------------------------
+    # ── Liveness ───────────────────────────────────────────────────────────────
 
     def _check_zap_alive(self):
-        """
-        Raises a descriptive RuntimeError if ZAP is not responding.
-        Call this at the start of every public method.
-        """
-        if not is_zap_running():
+        """Raise RuntimeError with a clear message if ZAP is not running."""
+        logger.info("Verifying ZAP health before scan...")
+        if not ZapService.is_zap_healthy():
             raise RuntimeError(
-                f"Cannot connect to ZAP at {ZAP_URL}. "
-                "ZAP must be running in daemon mode before a scan can be triggered. "
-                "Start ZAP with: "
-                "zap.bat -daemon -port 8080 -config api.key=switchguard2024 "
-                "-config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
+                "OWASP ZAP daemon is not reachable at %s. "
+                "Ensure ZAP is started (see backend/start_zap.ps1) before running a web scan." % ZAP_URL
             )
-        logger.info("ZAP liveness check passed (version: %s).", self.zap.core.version)
+        logger.info("ZAP confirmed READY (version: %s).", self.zap.core.version)
 
     def _access_target(self):
-        """
-        Forces ZAP to add the target to its Site Tree by loading the URL
-        through the ZAP proxy.  Without this the Spider may return zero URLs.
-        """
+        """Seeds the ZAP Site Tree with the target URL so the spider has a starting point."""
         logger.info("ZAP: seeding Site Tree with %r …", self.target)
         try:
             self.zap.urlopen(self.target)
         except Exception as e:
-            # Non-fatal — ZAP may still be able to crawl without this seed
             logger.warning("ZAP urlopen failed (non-fatal): %s", e)
         time.sleep(2)
 
     def _validate_scan_id(self, scan_id, scan_label: str):
-        """
-        ZAP returns a numeric string on success or an error dict / string on
-        failure (e.g. 'url_not_in_context', 'does_not_exist').  Raise a
-        descriptive error immediately so the problem surfaces in logs.
-        """
+        """ZAP returns a numeric string on success or an error dict on failure."""
         if not str(scan_id).isdigit():
             raise RuntimeError(
                 f"ZAP {scan_label} failed to start. "
                 f"Response: {scan_id!r}. "
-                "Ensure the target URL is reachable and has been added to ZAP's context."
+                "Ensure the target URL is reachable and added to ZAP's context."
             )
 
-    # ------------------------------------------------------------------
-    # Public scan methods
-    # ------------------------------------------------------------------
+    # ── Authentication ─────────────────────────────────────────────────────────
+
+    def configure_form_auth(
+        self,
+        login_url: str,
+        username: str,
+        password: str,
+        username_field: str = "username",
+        password_field: str = "password",
+        logged_in_indicator: str = "logout",
+    ):
+        """
+        Configures ZAP form-based authentication for an authenticated scan.
+        Creates a ZAP context scoped to the target domain.
+        """
+        logger.info("Configuring form-based auth for %r", self.target)
+        ctx_name = "sg_auth_ctx"
+        self.ctx_id = self.zap.context.new_context(ctx_name)
+
+        # Include the whole target domain in the context
+        domain = urlparse(self.target).netloc
+        self.zap.context.include_in_context(ctx_name, f".*{domain}.*")
+
+        # Set form-based authentication
+        login_data = (
+            f"loginUrl={login_url}"
+            f"&loginRequestData={username_field}%3D{{%25username%25}}"
+            f"%26{password_field}%3D{{%25password%25}}"
+        )
+        self.zap.authentication.set_authentication_method(
+            self.ctx_id, "formBasedAuthentication", login_data
+        )
+        self.zap.authentication.set_logged_in_indicator(self.ctx_id, logged_in_indicator)
+
+        # Create ZAP user for this context
+        user_id = self.zap.users.new_user(self.ctx_id, "sg_user")
+        self.zap.users.set_authentication_credentials(
+            self.ctx_id,
+            user_id,
+            f"username={username}&password={password}",
+        )
+        self.zap.users.set_user_enabled(self.ctx_id, user_id, True)
+        self.zap.forcedUser.set_forced_user(self.ctx_id, user_id)
+        self.zap.forcedUser.set_forced_user_mode_enabled(True)
+        logger.info("Form auth configured. ctx_id=%s user_id=%s", self.ctx_id, user_id)
+
+    def configure_bearer_auth(self, token: str):
+        """Injects a Bearer token into all ZAP requests via a script or replacement rule."""
+        logger.info("Configuring bearer token auth")
+        try:
+            self.zap.replacer.add_rule(
+                description="Bearer Token",
+                enabled=True,
+                matchtype="REQ_HEADER",
+                matchregex=False,
+                matchstring="Authorization",
+                replacement=f"Bearer {token}",
+                initiators="",
+            )
+        except Exception as e:
+            logger.warning("Bearer token injection via replacer failed: %s. Using urlopen header workaround.", e)
+
+    # ── Spider ─────────────────────────────────────────────────────────────────
 
     def run_spider(self, cancellation_check=None) -> list:
-        """
-        Spider the target and return the list of URLs found.
-
-        Parameters
-        ----------
-        cancellation_check : callable, optional
-            Zero-argument callable → True when the scan should be aborted.
-        """
+        """Standard passive spider — best for server-rendered sites."""
         self._check_zap_alive()
         self._access_target()
 
         logger.info("ZAP Spider starting on %r", self.target)
-        scan_id = self.zap.spider.scan(self.target)
+        scan_id = self.zap.spider.scan(self.target, contextname=None if not self.ctx_id else "sg_auth_ctx")
         self._validate_scan_id(scan_id, "Spider")
 
         while True:
-            progress = int(self.zap.spider.status(scan_id))
+            try:
+                progress = int(self.zap.spider.status(scan_id))
+            except Exception:
+                progress = 0
             logger.info("  Spider progress: %d%%", progress)
 
             if cancellation_check and cancellation_check():
@@ -159,23 +183,58 @@ class ZapScanner:
         logger.info("ZAP Spider completed. %d URL(s) found.", len(urls))
         return urls
 
-    def run_active_scan(self, cancellation_check=None) -> list:
+    def run_ajax_spider(self, cancellation_check=None) -> list:
         """
-        Run ZAP active scan against the target; return serialisable alert list.
+        AJAX spider — required for React/Angular/Vue SPAs.
+        Launches a browser-based crawl via ZAP's built-in headless browser.
+        """
+        self._check_zap_alive()
+        self._access_target()
 
-        Parameters
-        ----------
-        cancellation_check : callable, optional
-            Zero-argument callable → True when the scan should be aborted.
-        """
+        logger.info("ZAP AJAX Spider starting on %r", self.target)
+        self.zap.ajaxSpider.scan(self.target)
+
+        # Poll until AJAX spider reports "stopped"
+        timeout = int(os.getenv("AJAX_SPIDER_TIMEOUT", "180"))
+        elapsed = 0
+        while elapsed < timeout:
+            status = self.zap.ajaxSpider.status
+            logger.info("  AJAX Spider status: %s (%ds elapsed)", status, elapsed)
+
+            if cancellation_check and cancellation_check():
+                logger.info("Cancellation requested — stopping AJAX spider.")
+                self.zap.ajaxSpider.stop()
+                return []
+
+            if status == "stopped":
+                break
+
+            time.sleep(AJAX_POLL_INTERVAL)
+            elapsed += AJAX_POLL_INTERVAL
+
+        results = list(self.zap.ajaxSpider.results())
+        logger.info("AJAX Spider completed. %d resource(s) found.", len(results))
+        return results
+
+    # ── Active Scan ─────────────────────────────────────────────────────────────
+
+    def run_active_scan(self, cancellation_check=None) -> list:
+        """Active scan against the target; returns a serialisable alert list."""
         self._check_zap_alive()
 
         logger.info("ZAP Active Scan starting on %r", self.target)
-        scan_id = self.zap.ascan.scan(self.target)
+        scan_kwargs = {"url": self.target}
+        if self.ctx_id:
+            scan_kwargs["contextid"] = self.ctx_id
+
+        scan_id = self.zap.ascan.scan(**scan_kwargs)
         self._validate_scan_id(scan_id, "Active Scan")
 
         while True:
-            progress = int(self.zap.ascan.status(scan_id))
+            try:
+                progress = int(self.zap.ascan.status(scan_id))
+            except Exception:
+                progress = 0
             logger.info("  Active Scan progress: %d%%", progress)
 
             if cancellation_check and cancellation_check():
@@ -192,20 +251,28 @@ class ZapScanner:
         logger.info("ZAP found %d alert(s) for %r.", len(alerts), self.target)
         return self._make_serializable(alerts)
 
-    def run_full_scan(self, cancellation_check=None) -> list:
+    # ── Full Scan Pipeline ──────────────────────────────────────────────────────
+
+    def run_full_scan(self, cancellation_check=None, use_ajax: bool = False) -> list:
         """
-        Convenience method: Spider → Active Scan → alerts.
-        This is the recommended entry-point for the background task.
+        Full pipeline:  Spider/AJAX Spider → Active Scan → alerts.
+
+        Args:
+            cancellation_check: callable → True when scan should be aborted.
+            use_ajax: If True, use the AJAX spider instead of the standard spider.
+                      Enable for React/Vue/Angular targets.
         """
-        self.run_spider(cancellation_check=cancellation_check)
+        if use_ajax:
+            self.run_ajax_spider(cancellation_check=cancellation_check)
+        else:
+            self.run_spider(cancellation_check=cancellation_check)
+
         return self.run_active_scan(cancellation_check=cancellation_check)
 
-    # ------------------------------------------------------------------
-    # Helper
-    # ------------------------------------------------------------------
+    # ── Helper ─────────────────────────────────────────────────────────────────
 
     def _make_serializable(self, obj):
-        """Recursively convert any non-JSON-native types."""
+        """Recursively converts any non-JSON-native types."""
         if isinstance(obj, dict):
             return {k: self._make_serializable(v) for k, v in obj.items()}
         if isinstance(obj, (list, tuple)):

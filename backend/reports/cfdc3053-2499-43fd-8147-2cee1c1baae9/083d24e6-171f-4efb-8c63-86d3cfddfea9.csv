@@ -1,0 +1,9 @@
+Vulnerability Name,Effective Severity,CVSS Score,EPSS Score,Risk Score,CVE ID,CWE ID,Asset URL/IP,Recommendation,OWASP Top 10,Date Discovered
+CVE: CVE-2000-0771 in Microsoft Windows RPC,Unknown,N/A,0.0023,2.8,CVE-2000-0771,NVD-CWE-Other,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2003-0003 in Microsoft Windows RPC,Unknown,N/A,0.2341,2.8,CVE-2003-0003,NVD-CWE-Other,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2025-62595 in Node.js Express framework,Medium,4.3,0.0001,5.4,CVE-2025-62595,CWE-601,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2002-1140 in Microsoft Windows RPC,Unknown,N/A,0.1809,2.8,CVE-2002-1140,NVD-CWE-Other,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2002-1141 in Microsoft Windows RPC,Unknown,N/A,0.1809,2.8,CVE-2002-1141,NVD-CWE-Other,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2016-10539 in Node.js Express framework,Unknown,N/A,0.0033,2.8,CVE-2016-10539,CWE-400,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2001-0509 in Microsoft Windows RPC,Unknown,N/A,0.1296,2.8,CVE-2001-0509,CWE-20,N/A,N/A,,2026-04-06 07:04:31
+CVE: CVE-2014-6393 in Node.js Express framework,Unknown,N/A,0.0029,2.8,CVE-2014-6393,CWE-79,N/A,N/A,,2026-04-06 07:04:31

@@ -9,6 +9,10 @@ import Scanner from './pages/Scanner';
 import History from './pages/History';
 import Dashboard from './pages/Dashboard';
 import ScanDetails from './pages/ScanDetails';
+import RemediationQueue from './pages/RemediationQueue';
+import Analytics from './pages/Analytics';
+import ChainExplorer from './pages/ChainExplorer';
+import ClientPortal from './pages/ClientPortal';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Users from './pages/admin/Users';
 import Assets from './pages/admin/Assets';
@@ -74,6 +78,10 @@ function App() {
               <Route path="scan" element={<Scanner />} />
               <Route path="history" element={<History />} />
               <Route path="scan/:id" element={<ScanDetails />} />
+              <Route path="remediation" element={<RemediationQueue />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="chains/:id" element={<ChainExplorer />} />
+              <Route path="portal" element={<ClientPortal />} />
 
               <Route path="*" element={<RootRedirector />} />
 

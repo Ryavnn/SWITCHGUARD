@@ -84,7 +84,7 @@ const History = () => {
 
       {/* Filter Controls */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-        {[['all', 'All'], ['network', 'Network'], ['web', 'Web App'], ['completed', 'Completed'], ['running', 'Running'], ['failed', 'Failed'], ['cancelled', 'Cancelled']].map(([val, label]) => (
+        {[['all', 'All'], ['network', 'Network'], ['web', 'Web App'], ['nuclei', 'Nuclei'], ['completed', 'Completed'], ['running', 'Running'], ['failed', 'Failed'], ['cancelled', 'Cancelled']].map(([val, label]) => (
           <button
             key={val}
             onClick={() => setFilter(val)}
@@ -162,6 +162,14 @@ const History = () => {
                             disabled={downloading === job.job_id + 'pdf'}
                           >
                             {downloading === job.job_id + 'pdf' ? '...' : '↓ PDF'}
+                          </button>
+                          <button 
+                            className="sg-btn sg-btn-ghost" 
+                            style={{ padding: '4px 8px', fontSize: '0.75rem', borderColor: 'rgba(255,255,255,0.1)', color: '#10b981' }}
+                            onClick={(e) => handleDownload(e, job.job_id, 'json')}
+                            disabled={downloading === job.job_id + 'json'}
+                          >
+                            {downloading === job.job_id + 'json' ? '...' : '↓ JSON'}
                           </button>
                         </div>
                       )}

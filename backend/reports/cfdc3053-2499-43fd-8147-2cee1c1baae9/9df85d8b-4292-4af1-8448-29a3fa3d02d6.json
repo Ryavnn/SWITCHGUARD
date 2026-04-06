@@ -1,0 +1,25 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-04-05T21:08:41.199525",
+  "scan": {
+    "job_id": "9df85d8b-4292-4af1-8448-29a3fa3d02d6",
+    "target": "https://virtualcampus.kcau.ac.ke/",
+    "scan_type": "web",
+    "status": "completed",
+    "created_at": "2026-04-05T21:07:36.820401"
+  },
+  "metrics": {
+    "total_assets": 0,
+    "total_vulns": 0,
+    "severity_summary": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0,
+      "Informational": 0
+    },
+    "risk_score": 0
+  },
+  "assets": [],
+  "vulnerabilities": []
+}

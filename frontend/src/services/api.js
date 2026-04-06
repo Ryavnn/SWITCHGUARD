@@ -85,6 +85,17 @@ api.interceptors.response.use(
       }
     }
 
+    // ── Non-401 Error Handling ──────────────────────────────────────────────
+    if (!error.response) {
+      // Truly a Network Error (unreachable, CORS, or local connection issues)
+      error.message = "The security backend is unreachable. Please verify that the server is running on " + BASE_URL;
+    } else if (error.response.status >= 500) {
+      error.message = "A critical server error occurred (500). Please check the backend logs.";
+    } else if (error.response.data && error.response.data.detail) {
+      // Exact FastAPI detail message (e.g. "Invalid credentials")
+      error.message = error.response.data.detail;
+    }
+
     return Promise.reject(error);
   },
 );

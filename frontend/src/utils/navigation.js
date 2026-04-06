@@ -9,14 +9,22 @@ export const getNavItems = (role) => {
     { to: prefix, icon: '▪', label: role === 'Admin' ? 'Admin Dashboard' : role === 'Analyst' ? 'Analyst View' : 'My Dashboard' }
   ];
 
+  if (role === 'Admin' || role === 'Analyst') {
+    items.push({ to: '/remediation', icon: '⚡', label: 'Remediation Queue' });
+    items.push({ to: '/analytics', icon: '📈', label: 'Intelligence' });
+  }
+
   if (role === 'Admin') {
     items.push({ to: '/history', icon: '≡', label: 'All Scans' });
     items.push({ to: '/admin/users', icon: '👤', label: 'Users & Roles' });
     items.push({ to: '/admin/assets', icon: '🖥', label: 'Global Assets' });
-    items.push({ to: '/admin/audit-logs', icon: '📜', label: 'Audit Logs' });
+    items.push({ to: '/portal', icon: '🏢', label: 'Client Portal' });
     items.push({ to: '/admin/settings', icon: '⚙', label: 'Platform Settings' });
   } else {
     items.push({ to: '/history', icon: '≡', label: 'My Scans' });
+    if (role === 'User') {
+      items.push({ to: '/portal', icon: '🏢', label: 'My Portal' });
+    }
   }
 
   // Insert New Scan at index 1

@@ -1,0 +1,154 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-04-06T06:28:49.223148",
+  "scan": {
+    "job_id": "5fb828e8-ea33-4dda-b721-6db79731800e",
+    "target": "192.168.8.124",
+    "scan_type": "network",
+    "status": "completed",
+    "created_at": "2026-04-06T06:27:18.687017"
+  },
+  "metrics": {
+    "total_assets": 1,
+    "total_vulns": 8,
+    "severity_summary": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 1,
+      "Low": 0,
+      "Informational": 7
+    },
+    "risk_score": 16
+  },
+  "assets": [
+    {
+      "ip_address": "192.168.8.124",
+      "hostname": "host.docker.internal",
+      "os_detected": "Unknown",
+      "criticality": "medium",
+      "environment": "unknown"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "title": "CVE: CVE-2001-0509 in Microsoft Windows RPC",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.12961,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2001-0509",
+      "cwe_id": "CWE-20",
+      "url": null,
+      "solution": null,
+      "description": "Vulnerabilities in RPC servers in (1) Microsoft Exchange Server 2000 and earlier, (2) Microsoft SQL Server 2000 and earlier, (3) Windows NT 4.0, and (4) Windows 2000 allow remote attackers to cause a denial of service via malformed inputs.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2002-1140 in Microsoft Windows RPC",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.18087,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2002-1140",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "The Sun Microsystems RPC library Services for Unix 3.0 Interix SD, as implemented on Microsoft Windows NT4, 2000, and XP, allows remote attackers to cause a denial of service (service hang) via malformed packet fragments, aka \"Improper parameter size check leading to denial of service.\"",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2025-62595 in Node.js Express framework",
+      "severity": "Medium",
+      "cvss_score": 4.3,
+      "epss_score": 0.00013,
+      "risk_score": 5.4,
+      "cve_id": "CVE-2025-62595",
+      "cwe_id": "CWE-601",
+      "url": null,
+      "solution": null,
+      "description": "Koa is expressive middleware for Node.js using ES2017 async functions. In versions 2.16.2 to before 2.16.3 and 3.0.1 to before 3.0.3, a bypass to CVE-2025-8129 was discovered in the Koa.js framework affecting its back redirect functionality. In certain circumstances, an attacker can manipulate the Referer header to force a user\u2019s browser to navigate to an external, potentially malicious website. This occurs because the implementation incorrectly treats some specially crafted URLs as safe relative paths. Exploiting this vulnerability could allow attackers to perform phishing, social engineering, or other redirect-based attacks on users of affected applications. This issue has been patched in version 3.0.3.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2016-10539 in Node.js Express framework",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.00328,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2016-10539",
+      "cwe_id": "CWE-400",
+      "url": null,
+      "solution": null,
+      "description": "negotiator is an HTTP content negotiator for Node.js and is used by many modules and frameworks including Express and Koa. The header for \"Accept-Language\", when parsed by negotiator 0.6.0 and earlier is vulnerable to Regular Expression Denial of Service via a specially crafted string.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2003-0003 in Microsoft Windows RPC",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.23406,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2003-0003",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "Buffer overflow in the RPC Locator service for Microsoft Windows NT 4.0, Windows NT 4.0 Terminal Server Edition, Windows 2000, and Windows XP allows local users to execute arbitrary code via an RPC call to the service containing certain parameter information.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2014-6393 in Node.js Express framework",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.0029,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2014-6393",
+      "cwe_id": "CWE-79",
+      "url": null,
+      "solution": null,
+      "description": "The Express web framework before 3.11 and 4.x before 4.5 for Node.js does not provide a charset field in HTTP Content-Type headers in 400 level responses, which might allow remote attackers to conduct cross-site scripting (XSS) attacks via characters in a non-standard encoding.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2002-1141 in Microsoft Windows RPC",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.18087,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2002-1141",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "An input validation error in the Sun Microsystems RPC library Services for Unix 3.0 Interix SD, as implemented on Microsoft Windows NT4, 2000, and XP, allows remote attackers to cause a denial of service via malformed fragmented RPC client packets, aka \"Denial of service by sending an invalid RPC request.\"",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2000-0771 in Microsoft Windows RPC",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.00233,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2000-0771",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "Microsoft Windows 2000 allows local users to cause a denial of service by corrupting the local security policy via malformed RPC traffic, aka the \"Local Security Policy Corruption\" vulnerability.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    }
+  ]
+}
