@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { 
   ShieldCheck, 
   AlertTriangle, 
@@ -19,7 +19,7 @@ const RemediationQueue = () => {
   const fetchQueue = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/remediation/queue');
+      const res = await api.get('/api/remediation/queue');
       setQueue(res.data);
       setError(null);
     } catch (err) {
@@ -36,7 +36,7 @@ const RemediationQueue = () => {
 
   const handleResolve = async (id) => {
     try {
-      await axios.post(`/api/remediation/${id}/resolve`);
+      await api.post(`/api/remediation/${id}/resolve`);
       fetchQueue();
     } catch (err) {
       alert("Resolution failed.");
@@ -46,7 +46,7 @@ const RemediationQueue = () => {
   const handleComment = async (id) => {
     if (!commentText.trim()) return;
     try {
-      await axios.post(`/api/remediation/${id}/comment`, null, { 
+      await api.post(`/api/remediation/${id}/comment`, null, { 
         params: { comment: commentText } 
       });
       setCommentingOn(null);

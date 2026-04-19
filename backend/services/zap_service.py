@@ -46,9 +46,9 @@ logger = logging.getLogger(__name__)
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
-ZAP_URL     = os.getenv("ZAP_URL",     "http://127.0.0.1:8080")
+ZAP_URL     = os.getenv("ZAP_URL",     "http://127.0.0.1:8081")
 ZAP_API_KEY = os.getenv("ZAP_API_KEY", "12345")
-ZAP_PORT    = int(os.getenv("ZAP_PORT", "8080"))
+ZAP_PORT    = int(os.getenv("ZAP_PORT", "8081"))
 
 # JVM cold-start on first launch with 40+ addons takes 90-120 seconds.
 # We allow 180s (3 minutes) and use exponential polling so fast starts are fast.

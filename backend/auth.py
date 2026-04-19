@@ -68,6 +68,15 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Security(securi
     return user
 
 
+def get_current_active_user(user: models.User = Depends(get_current_user)):
+    """
+    Dependency to ensure the user is both authenticated AND active.
+    """
+    if not user.is_active:
+        raise HTTPException(status_code=401, detail="User account is inactive")
+    return user
+
+
 class RoleChecker:
     """
     Dependency to enforce RBAC. Usage: `Depends(RoleChecker(["Admin", "Analyst"]))`

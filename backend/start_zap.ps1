@@ -1,7 +1,7 @@
 # ZAP Startup Script for Windows
 $zapPath = "C:\Program Files\ZAP\Zed Attack Proxy\zap-2.17.0.jar"
 $apiKey = "12345"
-$port = "8080"
+$port = "8081"
 
 Write-Host "Starting OWASP ZAP in daemon mode on port $port..." -ForegroundColor Cyan
 

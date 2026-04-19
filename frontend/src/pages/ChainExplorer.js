@@ -9,7 +9,7 @@ import ReactFlow, {
   MarkerType
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import axios from 'axios';
+import api from '../services/api';
 import { useParams } from 'react-router-dom';
 import { Share2, RefreshCw, AlertCircle } from 'lucide-react';
 
@@ -27,7 +27,7 @@ const ChainExplorer = () => {
     if (!id) return;
     try {
       setLoading(true);
-      const res = await axios.get(`/api/analysis/chains/${id}`);
+      const res = await api.get(`/api/analysis/chains/${id}`);
       const data = res.data;
 
       // Transform NetworkX JSON to ReactFlow format

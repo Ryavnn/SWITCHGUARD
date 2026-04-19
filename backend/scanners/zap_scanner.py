@@ -26,7 +26,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ── Config ─────────────────────────────────────────────────────────────────────
-ZAP_URL     = os.getenv("ZAP_URL", "http://127.0.0.1:8080")
+ZAP_URL     = os.getenv("ZAP_URL", "http://127.0.0.1:8081")
 ZAP_API_KEY = os.getenv("ZAP_API_KEY", "12345")   # FIX: was undefined in module scope
 
 # FIX: poll intervals were used but never defined → NameError mid-scan

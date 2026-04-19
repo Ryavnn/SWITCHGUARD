@@ -187,7 +187,7 @@ def get_settings(db: Session = Depends(get_db)):
         default_settings = [
             models.SystemSetting(key="max_concurrent_scans", value="5", description="Limits parallel threads"),
             models.SystemSetting(key="report_retention_days", value="30", description="Days to keep PDFs"),
-            models.SystemSetting(key="zap_daemon_port", value="8080", description="ZAP API Hook")
+            models.SystemSetting(key="zap_daemon_port", value="8081", description="ZAP API Hook")
         ]
         db.add_all(default_settings)
         db.commit()

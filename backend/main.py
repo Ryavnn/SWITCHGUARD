@@ -47,7 +47,7 @@ from sqlalchemy.orm import Session, joinedload
 
 import auth
 import schemas
-from database import db as db_module
+from database.db import engine, SessionLocal, get_db
 from database import models
 from services import parsers, report_service, zap_service, ollama_service, tenant_service
 from services.notification_service import NotificationService

@@ -69,6 +69,7 @@ class User(Base):
     roles           = relationship("Role", secondary="user_roles", back_populates="users")
     scans           = relationship("ScanJob", back_populates="owner")
     reports         = relationship("Report", back_populates="owner")
+    tenant          = relationship("Tenant")
 
 
 class ScanJob(Base):

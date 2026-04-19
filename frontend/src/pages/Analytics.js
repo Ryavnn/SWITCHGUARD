@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   AreaChart, Area, PieChart, Pie, Cell, Legend
@@ -23,9 +23,9 @@ const Analytics = () => {
     const fetchData = async () => {
       try {
         const [lRes, fRes, tRes] = await Promise.all([
-          axios.get('/api/analytics/breach-likelihood'),
-          axios.get('/api/analytics/risk-forecast'),
-          axios.get('/api/analytics/top-threats')
+          api.get('/api/analytics/breach-likelihood'),
+          api.get('/api/analytics/risk-forecast'),
+          api.get('/api/analytics/top-threats')
         ]);
         setLikelihood(lRes.data);
         setForecast(fRes.data);
