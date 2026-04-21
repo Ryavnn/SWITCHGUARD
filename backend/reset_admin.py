@@ -15,7 +15,27 @@ def reset_admin_password(email="admin@test.com", new_password="admin123"):
     try:
         user = db.query(models.User).filter(models.User.email == email).first()
         if not user:
-            print(f"Error: User with email {email} not found.")
+            print(f"User {email} not found. Creating new admin user...")
+            hashed = auth.get_password_hash(new_password)
+            user = models.User(
+                name="System Admin",
+                email=email,
+                hashed_password=hashed,
+                is_active=True
+            )
+            db.add(user)
+            db.flush() # Get user ID
+            
+            # Assign Admin role
+            admin_role = db.query(models.Role).filter(models.Role.name == "Admin").first()
+            if admin_role:
+                user.roles.append(admin_role)
+                print("  Assigned 'Admin' role.")
+            else:
+                print("  Warning: 'Admin' role not found in database.")
+            
+            db.commit()
+            print(f"Successfully created admin user {email} with password: {new_password}")
             return
 
         print(f"Resetting password for {email}...")
@@ -25,6 +45,12 @@ def reset_admin_password(email="admin@test.com", new_password="admin123"):
         # Ensure user is active
         user.is_active = True
         
+        # Ensure user has Admin role if not already assigned
+        admin_role = db.query(models.Role).filter(models.Role.name == "Admin").first()
+        if admin_role and admin_role not in user.roles:
+            user.roles.append(admin_role)
+            print("  Assigned 'Admin' role to existing user.")
+
         db.commit()
         print(f"Successfully reset password for {email} to: {new_password}")
         

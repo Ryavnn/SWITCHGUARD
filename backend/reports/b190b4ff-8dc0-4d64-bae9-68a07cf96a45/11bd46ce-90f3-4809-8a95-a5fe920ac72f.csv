@@ -1,0 +1,5 @@
+Vulnerability Name,Effective Severity,CVSS Score,EPSS Score,Risk Score,CVE ID,CWE ID,Asset URL/IP,Recommendation,OWASP Top 10,Date Discovered
+CVE: CVE-2001-0385 in GoAhead WebServer,Informational,N/A,N/A,2.8,CVE-2001-0385,NVD-CWE-Other,N/A,N/A,,2026-04-21 17:19:32
+CVE: CVE-2002-2427 in GoAhead WebServer,Informational,N/A,N/A,2.8,CVE-2002-2427,CWE-287,N/A,N/A,,2026-04-21 17:19:32
+CVE: CVE-2002-1951 in GoAhead WebServer,Informational,N/A,N/A,2.8,CVE-2002-1951,NVD-CWE-Other,N/A,N/A,,2026-04-21 17:19:32
+CVE: CVE-2002-2428 in GoAhead WebServer,Informational,N/A,N/A,2.8,CVE-2002-2428,CWE-20,N/A,N/A,,2026-04-21 17:19:32

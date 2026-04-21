@@ -158,30 +158,68 @@ def parse_nmap_results(job_id: str, raw_data: dict, db: Session, user_id: str = 
 
 def parse_zap_results(job_id: str, alerts: list, db: Session, user_id: str = None):
     try:
+        if not alerts:
+            return
+
+        # ── Step 0: Ensure an Asset exists for the top-level URL target ─────────
+        # This fixes "0 hosts" in PDF reports for Web scans.
+        from urllib.parse import urlparse
+        first_url = alerts[0].get("url", "")
+        domain = urlparse(first_url).netloc or "web-target"
+        
+        asset = db.query(models.Asset).filter_by(job_id=job_id, ip_address=domain).first()
+        if not asset:
+            try:
+                asset = models.Asset(
+                    job_id=job_id,
+                    user_id=user_id,
+                    ip_address=domain,
+                    hostname=domain,
+                    os_detected="Web Application",
+                )
+                db.add(asset)
+                db.commit()
+                db.refresh(asset)
+            except Exception as ae:
+                logger.error("[%s] Failed to create web asset: %s", job_id, ae)
+                db.rollback()
+
         seen_alerts = set()
         for alert in alerts:
-            sig = f"{alert.get('alert')}|{alert.get('url')}|{alert.get('evidence')}"
-            if sig in seen_alerts:
-                continue
-            seen_alerts.add(sig)
+            try:
+                sig = f"{alert.get('alert')}|{alert.get('url')}|{alert.get('evidence')}"
+                if sig in seen_alerts:
+                    continue
+                seen_alerts.add(sig)
 
-            severity = _normalize_severity(alert.get("risk", "Low"))
-            vuln = models.VulnerabilityInstance(
-                job_id=job_id,
-                user_id=user_id,
-                title=alert.get("alert", "Unknown Issue"),
-                description=alert.get("description", ""),
-                severity=severity,
-                risk_score=float(alert.get("confidence", 0)) * 2,
-                evidence=alert.get("evidence", ""),
-                url=alert.get("url", ""),
-                solution=alert.get("solution", ""),
-                cwe_id=str(alert.get("cweid", "")) or None,
-                confidence_score=float(alert.get("confidence", 0)) / 4.0,
-                sla_due_date=_calc_sla(severity),
-            )
-            db.add(vuln)
-        db.commit()
+                # Robust numeric extraction
+                def _safefloat(v, default=0.0):
+                    try: return float(v)
+                    except (TypeError, ValueError): return default
+
+                raw_conf = alert.get("confidence", 0)
+                conf_val = _safefloat(raw_conf)
+                
+                severity = _normalize_severity(alert.get("risk", "Low"))
+                vuln = models.VulnerabilityInstance(
+                    job_id=job_id,
+                    user_id=user_id,
+                    title=alert.get("alert", "Unknown Issue"),
+                    description=alert.get("description", ""),
+                    severity=severity,
+                    risk_score=conf_val * 2,
+                    evidence=alert.get("evidence", ""),
+                    url=alert.get("url", ""),
+                    solution=alert.get("solution", ""),
+                    cwe_id=str(alert.get("cweid", "")) or None,
+                    confidence_score=conf_val / 4.0,
+                    sla_due_date=_calc_sla(severity),
+                )
+                db.add(vuln)
+                db.commit() # Commit each to be safe or use flush
+            except Exception as item_err:
+                logger.error("[%s] Skipping one ZAP alert due to error: %s", job_id, item_err)
+                db.rollback()
 
         correlator = CorrelationService(db)
         correlator.correlate_job(job_id)

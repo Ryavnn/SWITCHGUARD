@@ -1,0 +1,64 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-04-20T18:26:03.642917",
+  "scan": {
+    "job_id": "be2d05a2-494e-4d2a-a5cd-fc4be326cecc",
+    "target": "https://www.memorableevents.co.ke",
+    "scan_type": "web",
+    "status": "completed",
+    "created_at": "2026-04-20T18:14:52.441690"
+  },
+  "metrics": {
+    "total_assets": 1,
+    "total_vulns": 2,
+    "severity_summary": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0,
+      "Informational": 2
+    },
+    "risk_score": 4
+  },
+  "assets": [
+    {
+      "ip_address": "www.memorableevents.co.ke",
+      "hostname": "www.memorableevents.co.ke",
+      "os_detected": "Web Application",
+      "criticality": "medium",
+      "environment": "unknown"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "title": "User Agent Fuzzer",
+      "severity": "Informational",
+      "cvss_score": null,
+      "epss_score": null,
+      "risk_score": 1.0,
+      "cve_id": null,
+      "cwe_id": "0",
+      "url": "https://www.memorableevents.co.ke",
+      "solution": "",
+      "description": "Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.",
+      "evidence": "",
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "User Agent Fuzzer",
+      "severity": "Informational",
+      "cvss_score": null,
+      "epss_score": null,
+      "risk_score": 1.0,
+      "cve_id": null,
+      "cwe_id": "0",
+      "url": "https://www.memorableevents.co.ke/",
+      "solution": "",
+      "description": "Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.",
+      "evidence": "",
+      "owasp": null,
+      "pci_dss": null
+    }
+  ]
+}

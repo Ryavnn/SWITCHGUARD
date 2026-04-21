@@ -1,0 +1,25 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-04-20T06:10:34.351912",
+  "scan": {
+    "job_id": "0f906fa6-80ed-49be-a200-eb6e5e89cc76",
+    "target": "https://www.njorogeryan.tech",
+    "scan_type": "web",
+    "status": "completed",
+    "created_at": "2026-04-20T06:09:04.882321"
+  },
+  "metrics": {
+    "total_assets": 0,
+    "total_vulns": 0,
+    "severity_summary": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0,
+      "Informational": 0
+    },
+    "risk_score": 0
+  },
+  "assets": [],
+  "vulnerabilities": []
+}

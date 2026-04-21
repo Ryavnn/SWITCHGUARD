@@ -1,0 +1,135 @@
+Vulnerability Name,Effective Severity,CVSS Score,EPSS Score,Risk Score,CVE ID,CWE ID,Asset URL/IP,Recommendation,OWASP Top 10,Date Discovered
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/robots.txt,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/robots.txt,N/A,,2026-04-20 06:27:19
+Cross-Domain JavaScript Source File Inclusion,Low,N/A,N/A,2.5,N/A,829,https://www.njorogeryan.tech,"Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.",,2026-04-20 06:27:19
+Information Disclosure - Suspicious Comments,Informational,N/A,N/A,1.0,N/A,615,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.,,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/assets,N/A,,2026-04-20 06:27:19
+Sub Resource Integrity Attribute Missing,Medium,N/A,N/A,5.0,N/A,345,https://www.njorogeryan.tech/,Provide a valid integrity attribute to the tag.,,2026-04-20 06:27:19
+Modern Web Application,Informational,N/A,N/A,1.0,N/A,-1,https://www.njorogeryan.tech,This is an informational alert and so no changes are required.,,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/assets/index-BWF3I28f.css,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/api,N/A,,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/apple-touch-icon.png,N/A,,2026-04-20 06:27:19
+Cross-Domain JavaScript Source File Inclusion,Low,N/A,N/A,2.5,N/A,829,https://www.njorogeryan.tech/,"Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/assets/index-BWF3I28f.css,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/sitemap.xml,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/favicon.svg,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Missing Anti-clickjacking Header,Medium,N/A,N/A,5.0,N/A,1021,https://www.njorogeryan.tech/,"Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.
+If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's ""frame-ancestors"" directive.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,N/A,,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/robots.txt,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/favicon.svg,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/api/,N/A,,2026-04-20 06:27:19
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://www.njorogeryan.tech/,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/assets/index-BWF3I28f.css,N/A,,2026-04-20 06:27:19
+Modern Web Application,Informational,N/A,N/A,1.0,N/A,-1,https://www.njorogeryan.tech/,This is an informational alert and so no changes are required.,,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/favicon.svg,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/sitemap.xml,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/robots.txt,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/assets/index-BWF3I28f.css,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/sitemap.xml,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 06:27:19
+Sub Resource Integrity Attribute Missing,Medium,N/A,N/A,5.0,N/A,345,https://www.njorogeryan.tech,Provide a valid integrity attribute to the tag.,,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/favicon.svg,N/A,,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/assets/index-BWF3I28f.css,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+Sub Resource Integrity Attribute Missing,Medium,N/A,N/A,5.0,N/A,345,https://www.njorogeryan.tech/,Provide a valid integrity attribute to the tag.,,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/sitemap.xml,N/A,,2026-04-20 06:27:19
+Missing Anti-clickjacking Header,Medium,N/A,N/A,5.0,N/A,1021,https://www.njorogeryan.tech,"Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.
+If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's ""frame-ancestors"" directive.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech,N/A,,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/favicon.svg,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Cross-Domain Misconfiguration,Medium,N/A,N/A,5.0,N/A,264,https://www.njorogeryan.tech/,"Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).
+Configure the ""Access-Control-Allow-Origin"" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.",,2026-04-20 06:27:19
+Sub Resource Integrity Attribute Missing,Medium,N/A,N/A,5.0,N/A,345,https://www.njorogeryan.tech,Provide a valid integrity attribute to the tag.,,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/sitemap.xml,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/sitemap.xml,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/robots.txt,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 06:27:19
+Information Disclosure - Suspicious Comments,Informational,N/A,N/A,1.0,N/A,615,https://www.njorogeryan.tech/assets/index-CXYJaPWZ.js,Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.,,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/robots.txt,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+Retrieved from Cache,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech/,"Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.",,2026-04-20 06:27:19
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://www.njorogeryan.tech/,N/A,,2026-04-20 06:27:19
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://www.njorogeryan.tech/,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 06:27:19
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://www.njorogeryan.tech,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 06:27:19
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://www.njorogeryan.tech,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 06:27:19

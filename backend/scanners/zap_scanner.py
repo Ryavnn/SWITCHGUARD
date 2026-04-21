@@ -247,9 +247,17 @@ class ZapScanner:
             time.sleep(ASCAN_POLL_INTERVAL)
 
         logger.info("ZAP Active Scan completed.")
-        alerts = self.zap.core.alerts(baseurl=self.target)
-        logger.info("ZAP found %d alert(s) for %r.", len(alerts), self.target)
-        return self._make_serializable(alerts)
+        # Relaxed filtering: fetch ALL alerts from the current ZAP session
+        # Passing baseurl=self.target is too strict if the site redirects (e.g. www -> non-www)
+        alerts = self.zap.core.alerts()
+        
+        # Optional: filter by hostname to avoid contamination if ZAP wasn't cleared
+        from urllib.parse import urlparse
+        target_domain = urlparse(self.target).netloc
+        filtered = [a for a in alerts if target_domain in a.get("url", "")]
+        
+        logger.info("ZAP session has %d alert(s). %d match target domain %r.", len(alerts), len(filtered), target_domain)
+        return self._make_serializable(filtered)
 
     # ── Full Scan Pipeline ──────────────────────────────────────────────────────
 

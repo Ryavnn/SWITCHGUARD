@@ -18,6 +18,7 @@ New features:
 import os
 import csv
 import json
+import html
 from datetime import datetime
 from sqlalchemy.orm import Session
 from database import models
@@ -76,6 +77,15 @@ def ensure_user_dir(user_id: str) -> str:
     return path
 
 
+def _esc(text: any) -> str:
+    """Safe XML/HTML escaping for dynamic strings in Paragraph objects."""
+    if text is None:
+        return ""
+    # Ensure it is a string and escape XML/HTML reserved characters
+    # ReportLab Paragraph is very strict — unescaped & or < will crash generation.
+    return html.escape(str(text))
+
+
 # ── Data Fetching ──────────────────────────────────────────────────────────────
 
 def fetch_report_data(job_id: str, db: Session) -> dict:
@@ -84,9 +94,12 @@ def fetch_report_data(job_id: str, db: Session) -> dict:
         raise ValueError(f"ScanJob {job_id} not found.")
 
     assets = db.query(models.Asset).filter_by(job_id=job_id).all()
-    # FIX: exclude suppressed findings (false positives) and respect override severity
-    vulns  = db.query(models.VulnerabilityInstance).filter_by(
-        job_id=job_id, is_false_positive=False
+    # FIX: avoid issues where is_false_positive might be NULL in DB
+    from sqlalchemy import or_
+    vulns  = db.query(models.VulnerabilityInstance).filter(
+        models.VulnerabilityInstance.job_id == job_id,
+        or_(models.VulnerabilityInstance.is_false_positive == False,
+            models.VulnerabilityInstance.is_false_positive == None)
     ).all()
 
     # ── Fallback: if findings table is empty, extract from raw_results JSON ──
@@ -97,8 +110,16 @@ def fetch_report_data(job_id: str, db: Session) -> dict:
             from types import SimpleNamespace
 
             # ZAP fallback
-            if "zap" in raw and isinstance(raw["zap"], list):
-                for alert in raw["zap"]:
+            zap_alerts = []
+            if isinstance(raw, list):
+                # Standard web scan saves as [ {alert...}, {alert...} ]
+                zap_alerts = raw
+            elif isinstance(raw, dict) and "zap" in raw and isinstance(raw["zap"], list):
+                # Legacy / manual import format
+                zap_alerts = raw["zap"]
+
+            if zap_alerts:
+                for alert in zap_alerts:
                     vulns.append(SimpleNamespace(
                         title=alert.get("alert", "ZAP Alert"),
                         severity=alert.get("risk", "Low"),
@@ -112,8 +133,9 @@ def fetch_report_data(job_id: str, db: Session) -> dict:
                         cvss_score=None, epss_score=None
                     ))
             # Nmap fallback
-            if "nmap" in raw and "scan" in raw["nmap"]:
-                for ip, host in raw["nmap"]["scan"].items():
+            # FIX: "scan" is a top-level sibling of "nmap" in python-nmap result
+            if "scan" in raw and isinstance(raw["scan"], dict):
+                for ip, host in raw["scan"].items():
                     if "tcp" in host:
                         for port, info in host["tcp"].items():
                             vulns.append(SimpleNamespace(
@@ -298,9 +320,9 @@ def generate_pdf_report(job: models.ScanJob, data: dict, user_dir: str) -> str:
     Story.append(Paragraph("Technical Security Assessment Findings", ParagraphStyle(
         "SubTitle", fontSize=14, textColor=colors.grey, spaceAfter=20,
     )))
-    Story.append(Paragraph(f"<b>Target:</b> {job.target}", styles["Normal"]))
-    Story.append(Paragraph(f"<b>Scan Type:</b> {job.scan_type.upper()}", styles["Normal"]))
-    Story.append(Paragraph(f"<b>Job ID:</b> {job.job_id}", styles["Normal"]))
+    Story.append(Paragraph(f"<b>Target:</b> {_esc(job.target)}", styles["Normal"]))
+    Story.append(Paragraph(f"<b>Scan Type:</b> {_esc(job.scan_type).upper()}", styles["Normal"]))
+    Story.append(Paragraph(f"<b>Job ID:</b> {_esc(job.job_id)}", styles["Normal"]))
     Story.append(Paragraph(f"<b>Generated:</b> {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}", styles["Normal"]))
     Story.append(Spacer(1, 24))
 
@@ -308,7 +330,7 @@ def generate_pdf_report(job: models.ScanJob, data: dict, user_dir: str) -> str:
     metrics = data["metrics"]
     Story.append(Paragraph("1. Executive Summary", h2_style))
     Story.append(Paragraph(
-        f"The security assessment of <b>{job.target}</b> identified <b>{metrics['total_vulns']}</b> "
+        f"The security assessment of <b>{_esc(job.target)}</b> identified <b>{metrics['total_vulns']}</b> "
         f"finding(s) across <b>{metrics['total_assets']}</b> host(s). "
         f"The calculated risk score for this target is <b>{metrics['risk_score']}/100</b>.",
         styles["Normal"]
@@ -349,15 +371,15 @@ def generate_pdf_report(job: models.ScanJob, data: dict, user_dir: str) -> str:
             sev_color = _sev_colour(eff_sev)
             
             # Finding Heading
-            Story.append(Paragraph(f"{idx}. {v.title}", finding_title_style))
+            Story.append(Paragraph(f"{idx}. {_esc(v.title)}", finding_title_style))
             
             # Meta Metadata Table (Summary for PDF)
             m_data = [
                 [Paragraph("Severity", label_style), Paragraph(f"<b>{eff_sev}</b>", ParagraphStyle("Sev", textColor=sev_color, fontSize=10))],
-                [Paragraph("Target Asset", label_style), Paragraph(v.url or job.target, value_style)],
+                [Paragraph("Target Asset", label_style), Paragraph(_esc(v.url) or _esc(job.target), value_style)],
             ]
             if v.cve_id:
-                m_data.append([Paragraph("CVE ID", label_style), Paragraph(v.cve_id, value_style)])
+                m_data.append([Paragraph("CVE ID", label_style), Paragraph(_esc(v.cve_id), value_style)])
             if v.cvss_score:
                 m_data.append([Paragraph("CVSS Score", label_style), Paragraph(str(v.cvss_score), value_style)])
             
@@ -372,26 +394,26 @@ def generate_pdf_report(job: models.ScanJob, data: dict, user_dir: str) -> str:
 
             # Description Section
             Story.append(Paragraph("Description", label_style))
-            Story.append(Paragraph(v.description or "No description provided.", styles["Normal"]))
+            Story.append(Paragraph(_esc(v.description) or "No description provided.", styles["Normal"]))
             Story.append(Spacer(1, 8))
 
             # AI Insights Section (New in Phase 3)
             if any([getattr(v, "ai_summary", None), getattr(v, "ai_impact", None), getattr(v, "ai_remediation", None)]):
                 Story.append(Paragraph("AI-Powered Intelligence", ParagraphStyle("AISect", parent=h2_style, fontSize=11, textColor=colors.HexColor("#7c3aed"))))
-                if v.ai_summary:
+                if getattr(v, "ai_summary", None):
                     Story.append(Paragraph("Contextual Summary", label_style))
-                    Story.append(Paragraph(v.ai_summary, styles["Normal"]))
-                if v.ai_impact:
+                    Story.append(Paragraph(_esc(v.ai_summary), styles["Normal"]))
+                if getattr(v, "ai_impact", None):
                     Story.append(Paragraph("Business Impact", label_style))
-                    Story.append(Paragraph(v.ai_impact, styles["Normal"]))
-                if v.ai_remediation:
+                    Story.append(Paragraph(_esc(v.ai_impact), styles["Normal"]))
+                if getattr(v, "ai_remediation", None):
                     Story.append(Paragraph("Suggested Remediation Path", label_style))
-                    Story.append(Paragraph(v.ai_remediation, styles["Normal"]))
+                    Story.append(Paragraph(_esc(v.ai_remediation), styles["Normal"]))
                 Story.append(Spacer(1, 10))
 
             # Recommendation Section
             Story.append(Paragraph("Remediation / Recommendation", label_style))
-            Story.append(Paragraph(v.solution or "No remediation advice provided.", styles["Normal"]))
+            Story.append(Paragraph(_esc(v.solution) or "No remediation advice provided.", styles["Normal"]))
             Story.append(Spacer(1, 8))
 
             # Evidence Section
@@ -401,7 +423,8 @@ def generate_pdf_report(job: models.ScanJob, data: dict, user_dir: str) -> str:
                 clean_ev = str(v.evidence).strip()
                 if len(clean_ev) > 1500:
                     clean_ev = clean_ev[:1500] + "\n\n[TRUNCATED FOR PDF READABILITY]"
-                Story.append(Paragraph(clean_ev.replace("\n", "<br/>"), code_style))
+                # ESCAPING IS CRITICAL HERE: evidence often contains < or &
+                Story.append(Paragraph(_esc(clean_ev).replace("\n", "<br/>"), code_style))
 
             Story.append(Spacer(1, 20))
             
@@ -429,13 +452,13 @@ def generate_executive_pdf(job: models.ScanJob, data: dict, user_dir: str) -> st
 
     Story.append(Paragraph("SwitchGuard — Executive Security Brief", title_style))
     Story.append(Paragraph(
-        f"Target: <b>{job.target}</b> | Date: {datetime.utcnow().strftime('%Y-%m-%d')}",
+        f"Target: <b>{_esc(job.target)}</b> | Date: {datetime.utcnow().strftime('%Y-%m-%d')}",
         styles["Normal"],
     ))
     Story.append(Spacer(1, 20))
     Story.append(Paragraph("Risk Posture Summary", h2_style))
     Story.append(Paragraph(
-        f"The security assessment identified <b>{metrics['total_vulns']}</b> findings. "
+        f"The security assessment of <b>{_esc(job.target)}</b> identified <b>{metrics['total_vulns']}</b> findings. "
         f"The organisation's risk score is <b>{metrics['risk_score']}/100</b>. "
         f"Immediate action is required for Critical and High severity items.",
         styles["Normal"],

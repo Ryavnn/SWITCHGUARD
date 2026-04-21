@@ -1,0 +1,155 @@
+Vulnerability Name,Effective Severity,CVSS Score,EPSS Score,Risk Score,CVE ID,CWE ID,Asset URL/IP,Recommendation,OWASP Top 10,Date Discovered
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://portal.kcau.ac.ke/,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/Content/allcss?v=8IxFuQXdfKTg-zyCrvLlPchr8b9Yxg6JmU7F8h1EjZ81,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+User Controllable HTML Element Attribute (Potential XSS),Informational,N/A,N/A,1.0,N/A,20,https://portal.kcau.ac.ke/Default/LogIn,Validate all input and sanitize output it before writing to any HTML attributes.,,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/bundles/jquery?v=w2NV88ejH393Qgr2kF3iYmzZy7OShxWHkeMyrLC_cfs1,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke,N/A,,2026-04-20 18:03:56
+"Server Leaks Version Information via ""Server"" HTTP Response Header Field",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/sitemap.xml,"Ensure that your web server, application server, load balancer, etc. is configured to suppress the ""Server"" header or provide generic details.",,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/Default/LogIn,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/Content/images,N/A,,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/bundles/jquery?v=w2NV88ejH393Qgr2kF3iYmzZy7OShxWHkeMyrLC_cfs1,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/,N/A,,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/sitemap.xml,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/Content,N/A,,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/Content/allcss?v=8IxFuQXdfKTg-zyCrvLlPchr8b9Yxg6JmU7F8h1EjZ81,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/Default/ForgotPassword,N/A,,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/Default,N/A,,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/sitemap.xml,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/Default/ForgotPassword,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Absence of Anti-CSRF Tokens,Medium,N/A,N/A,5.0,N/A,352,https://portal.kcau.ac.ke/Default/LogIn,"Phase: Architecture and Design
+Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.
+For example, use anti-CSRF packages such as the OWASP CSRFGuard.
+
+Phase: Implementation
+Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.
+
+Phase: Architecture and Design
+Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).
+Note that this can be bypassed using XSS.
+
+Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.
+Note that this can be bypassed using XSS.
+
+Use the ESAPI Session Management control.
+This control includes a component for CSRF.
+
+Do not use the GET method for any request that triggers a state change.
+
+Phase: Implementation
+Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.",A01:2021 – Broken Access Control (CSRF),2026-04-20 18:03:56
+Authentication Request Identified,Informational,N/A,N/A,1.0,N/A,-1,https://portal.kcau.ac.ke/Default/ForgotPassword,This is an informational alert rather than a vulnerability and so there is nothing to fix.,,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+"Server Leaks Version Information via ""Server"" HTTP Response Header Field",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/Content/images/login-logo.png,"Ensure that your web server, application server, load balancer, etc. is configured to suppress the ""Server"" header or provide generic details.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke/sitemap.xml,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+Re-examine Cache-control Directives,Informational,N/A,N/A,1.0,N/A,525,https://portal.kcau.ac.ke,"For secure content, ensure the cache-control HTTP header is set with ""no-cache, no-store, must-revalidate"". If an asset should be cached consider setting the directives ""public, max-age, immutable"".",,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/Content/images/login-logo.png,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Authentication Request Identified,Informational,N/A,N/A,1.0,N/A,-1,https://portal.kcau.ac.ke/Default/LogIn,This is an informational alert rather than a vulnerability and so there is nothing to fix.,,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Session Management Response Identified,Informational,N/A,N/A,1.0,N/A,-1,https://portal.kcau.ac.ke/,This is an informational alert rather than a vulnerability and so there is nothing to fix.,,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/Default/ForgotPassword,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/bundles/jqueryval?v=hEGG8cMxk9p0ncdRUOJ-CnKN7NezhnPnWIvn6REucZo1,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/bundles/jqueryval?v=hEGG8cMxk9p0ncdRUOJ-CnKN7NezhnPnWIvn6REucZo1,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/robots.txt,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/Content/images/login-logo.png,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke/Default/LogIn,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+Absence of Anti-CSRF Tokens,Medium,N/A,N/A,5.0,N/A,352,https://portal.kcau.ac.ke/,"Phase: Architecture and Design
+Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.
+For example, use anti-CSRF packages such as the OWASP CSRFGuard.
+
+Phase: Implementation
+Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.
+
+Phase: Architecture and Design
+Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).
+Note that this can be bypassed using XSS.
+
+Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.
+Note that this can be bypassed using XSS.
+
+Use the ESAPI Session Management control.
+This control includes a component for CSRF.
+
+Do not use the GET method for any request that triggers a state change.
+
+Phase: Implementation
+Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.",A01:2021 – Broken Access Control (CSRF),2026-04-20 18:03:56
+User Controllable HTML Element Attribute (Potential XSS),Informational,N/A,N/A,1.0,N/A,20,https://portal.kcau.ac.ke/Default/ForgotPassword,Validate all input and sanitize output it before writing to any HTML attributes.,,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/bundles/bootstrap?v=ILwomNMIHYanmYeRDxspM79xaDxHY9QXY32LSjtl8t41,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Absence of Anti-CSRF Tokens,Medium,N/A,N/A,5.0,N/A,352,https://portal.kcau.ac.ke,"Phase: Architecture and Design
+Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.
+For example, use anti-CSRF packages such as the OWASP CSRFGuard.
+
+Phase: Implementation
+Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.
+
+Phase: Architecture and Design
+Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).
+Note that this can be bypassed using XSS.
+
+Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.
+Note that this can be bypassed using XSS.
+
+Use the ESAPI Session Management control.
+This control includes a component for CSRF.
+
+Do not use the GET method for any request that triggers a state change.
+
+Phase: Implementation
+Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.",A01:2021 – Broken Access Control (CSRF),2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/bundles/bootstrap?v=ILwomNMIHYanmYeRDxspM79xaDxHY9QXY32LSjtl8t41,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Cookie Without Secure Flag,Low,N/A,N/A,2.5,N/A,614,https://portal.kcau.ac.ke/,"Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.",,2026-04-20 18:03:56
+User Agent Fuzzer,Informational,N/A,N/A,1.0,N/A,0,https://portal.kcau.ac.ke/Default/LogIn,N/A,,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/Default/LogIn,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Cookie without SameSite Attribute,Low,N/A,N/A,2.5,N/A,1275,https://portal.kcau.ac.ke,Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.,,2026-04-20 18:03:56
+Absence of Anti-CSRF Tokens,Medium,N/A,N/A,5.0,N/A,352,https://portal.kcau.ac.ke/Default/ForgotPassword,"Phase: Architecture and Design
+Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.
+For example, use anti-CSRF packages such as the OWASP CSRFGuard.
+
+Phase: Implementation
+Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.
+
+Phase: Architecture and Design
+Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).
+Note that this can be bypassed using XSS.
+
+Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.
+Note that this can be bypassed using XSS.
+
+Use the ESAPI Session Management control.
+This control includes a component for CSRF.
+
+Do not use the GET method for any request that triggers a state change.
+
+Phase: Implementation
+Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.",A01:2021 – Broken Access Control (CSRF),2026-04-20 18:03:56
+Cookie without SameSite Attribute,Low,N/A,N/A,2.5,N/A,1275,https://portal.kcau.ac.ke/,Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.,,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/bundles/jquery?v=w2NV88ejH393Qgr2kF3iYmzZy7OShxWHkeMyrLC_cfs1,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Information Disclosure - Debug Error Messages,Low,N/A,N/A,2.5,N/A,1295,https://portal.kcau.ac.ke/Default/ForgotPassword,Disable debugging messages before pushing to production.,,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/Default/LogIn,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/Content/images/login-logo.png,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+Information Disclosure - Debug Error Messages,Low,N/A,N/A,2.5,N/A,1295,https://portal.kcau.ac.ke/Default/LogIn,Disable debugging messages before pushing to production.,,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/robots.txt,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke/,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+"Server Leaks Version Information via ""Server"" HTTP Response Header Field",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/robots.txt,"Ensure that your web server, application server, load balancer, etc. is configured to suppress the ""Server"" header or provide generic details.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/Default/ForgotPassword,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke/bundles/bootstrap?v=ILwomNMIHYanmYeRDxspM79xaDxHY9QXY32LSjtl8t41,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56
+Session Management Response Identified,Informational,N/A,N/A,1.0,N/A,-1,https://portal.kcau.ac.ke,This is an informational alert rather than a vulnerability and so there is nothing to fix.,,2026-04-20 18:03:56
+Cookie Without Secure Flag,Low,N/A,N/A,2.5,N/A,614,https://portal.kcau.ac.ke,"Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.",,2026-04-20 18:03:56
+X-Content-Type-Options Header Missing,Low,N/A,N/A,2.5,N/A,693,https://portal.kcau.ac.ke/Content/allcss?v=8IxFuQXdfKTg-zyCrvLlPchr8b9Yxg6JmU7F8h1EjZ81,"Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.
+If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke/robots.txt,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+Content Security Policy (CSP) Header Not Set,Medium,N/A,N/A,5.0,N/A,693,https://portal.kcau.ac.ke/Default/ForgotPassword,"Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",,2026-04-20 18:03:56
+"Server Leaks Information via ""X-Powered-By"" HTTP Response Header Field(s)",Low,N/A,N/A,2.5,N/A,497,https://portal.kcau.ac.ke/bundles/jqueryval?v=hEGG8cMxk9p0ncdRUOJ-CnKN7NezhnPnWIvn6REucZo1,"Ensure that your web server, application server, load balancer, etc. is configured to suppress ""X-Powered-By"" headers.",,2026-04-20 18:03:56
+Strict-Transport-Security Header Not Set,Low,N/A,N/A,2.5,N/A,319,https://portal.kcau.ac.ke,"Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.",,2026-04-20 18:03:56

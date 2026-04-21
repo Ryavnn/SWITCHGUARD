@@ -1,0 +1,109 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-04-20T06:07:43.157875",
+  "scan": {
+    "job_id": "de288be6-e0bc-4f06-afc5-0584b5fc3f7c",
+    "target": "192.168.0.1",
+    "scan_type": "network",
+    "status": "completed",
+    "created_at": "2026-04-20T06:07:06.506648"
+  },
+  "metrics": {
+    "total_assets": 1,
+    "total_vulns": 5,
+    "severity_summary": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0,
+      "Informational": 5
+    },
+    "risk_score": 10
+  },
+  "assets": [
+    {
+      "ip_address": "192.168.0.1",
+      "hostname": "",
+      "os_detected": "Unknown",
+      "criticality": "medium",
+      "environment": "unknown"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "title": "CVE: CVE-2001-0385 in GoAhead WebServer",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.06714,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2001-0385",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "GoAhead webserver 2.1 allows remote attackers to cause a denial of service via an HTTP request to the /aux directory.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2002-1951 in GoAhead WebServer",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.20567,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2002-1951",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "Buffer overflow in GoAhead WebServer 2.1 allows remote attackers to execute arbitrary code via a long HTTP GET request with a large number of subdirectories.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2003-0169 in GoAhead WebServer",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.14559,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2003-0169",
+      "cwe_id": "NVD-CWE-Other",
+      "url": null,
+      "solution": null,
+      "description": "hpnst.exe in the GoAhead-Webs webserver for HP Instant TopTools before 5.55 allows remote attackers to cause a denial of service (CPU consumption) via a request to hpnst.exe that calls itself, which causes an infinite loop.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2002-2427 in GoAhead WebServer",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.00304,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2002-2427",
+      "cwe_id": "CWE-287",
+      "url": null,
+      "solution": null,
+      "description": "The security handler in GoAhead WebServer before 2.1.1 allows remote attackers to bypass authentication and obtain access to protected web content via \"an extra slash in a URL,\" a different vulnerability than CVE-2002-1603.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    },
+    {
+      "title": "CVE: CVE-2002-2428 in GoAhead WebServer",
+      "severity": "Unknown",
+      "cvss_score": 0.0,
+      "epss_score": 0.00436,
+      "risk_score": 2.8,
+      "cve_id": "CVE-2002-2428",
+      "cwe_id": "CWE-20",
+      "url": null,
+      "solution": null,
+      "description": "webs.c in GoAhead WebServer before 2.1.4 allows remote attackers to cause a denial of service (NULL pointer dereference and daemon crash) via an HTTP POST request that contains a Content-Length header but no body data.",
+      "evidence": null,
+      "owasp": null,
+      "pci_dss": null
+    }
+  ]
+}

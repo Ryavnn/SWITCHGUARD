@@ -49,9 +49,10 @@ import auth
 import schemas
 from database.db import engine, SessionLocal, get_db
 from database import models
+from scanners import nmap_scanner, zap_scanner
 from services import parsers, report_service, zap_service, ollama_service, tenant_service
 from services.notification_service import NotificationService
-from routes import admin_routes, auth_routes, notification_routes, schedule_routes, ws_routes, tenant_routes, remediation_routes, chain_routes, analytics_routes, portal_routes
+from routes import admin_routes, auth_routes, notification_routes, schedule_routes, ws_routes, tenant_routes, chain_routes, analytics_routes, portal_routes
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -151,7 +152,6 @@ app.include_router(ws_routes.router)
 app.include_router(notification_routes.router)
 app.include_router(schedule_routes.router)
 app.include_router(tenant_routes.router)
-app.include_router(remediation_routes.router)
 app.include_router(chain_routes.router)
 app.include_router(analytics_routes.router)
 app.include_router(portal_routes.router)
@@ -244,11 +244,12 @@ def _broadcast(message: dict):
 # Required columns that must exist before ORM queries run.
 # Used inside _recover_stale_jobs and _startup_self_test.
 _REQUIRED_COLUMNS = {
-    "scan_jobs":       ["scan_profile", "use_ajax", "error_detail"],
+    "scan_jobs":       ["scan_profile", "use_ajax", "error_detail", "tenant_id"],
     "assets":          ["criticality", "environment", "tags", "internet_exposed",
-                        "business_owner", "first_seen", "last_seen"],
+                        "business_owner", "first_seen", "last_seen", "tenant_id"],
     "vulnerabilities": ["epss_score", "is_false_positive", "severity_override",
-                        "override_note", "override_by", "sla_due_date", "sla_breached"],
+                        "override_note", "override_by", "sla_due_date", "sla_breached",
+                        "cve_id", "cvss_score", "exploit_available", "tenant_id"],
 }
 
 
